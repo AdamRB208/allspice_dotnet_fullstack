@@ -19,6 +19,7 @@ public class RecipesService
     return recipe;
   }
 
+
   internal List<Recipe> GetAllRecipes()
   {
     List<Recipe> recipes = _recipesRepository.GetAllRecipes();
@@ -40,4 +41,16 @@ public class RecipesService
     }
     return recipe;
   }
+  internal string DeleteRecipe(int recipeId, Account userInfo)
+  {
+    Recipe recipe = GetRecipeById(recipeId);
+    if (recipe.CreatorId != userInfo.Id)
+    {
+      throw new Exception($"You cannot delete another users recipe, {userInfo.Name}!");
+    }
+    _recipesRepository.DeleteRecipe(recipeId);
+    return $"Deleted recipe {recipe.Title}!";
+  }
+
+
 }

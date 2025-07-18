@@ -2,6 +2,9 @@
 
 
 
+
+using System.ComponentModel.DataAnnotations;
+
 namespace allspice_dotnet_fullstack.Repositories;
 
 public class RecipesRepository
@@ -32,6 +35,7 @@ public class RecipesRepository
     }, recipeData).SingleOrDefault();
     return createdRecipe;
   }
+
 
   internal List<Recipe> GetAllRecipes()
   {
@@ -69,4 +73,16 @@ public class RecipesRepository
     }, new { RecipeId = recipeId }).SingleOrDefault();
     return foundRecipe;
   }
+
+  internal void DeleteRecipe(int recipeId)
+  {
+    string sql = @"
+    DELETE FROM recipes WHERE recipes.id = @RecipeId;";
+    int rowsAffected = _db.Execute(sql, new { recipeId });
+    if (rowsAffected == 0) throw new Exception("Delete was unsuccessful!");
+    if (rowsAffected > 1) throw new Exception("Delete was too successful!");
+  }
+
+
+
 }
