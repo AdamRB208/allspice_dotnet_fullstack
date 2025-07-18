@@ -1,3 +1,4 @@
+
 namespace allspice_dotnet_fullstack.Services;
 
 public class RecipesService
@@ -9,5 +10,9 @@ public class RecipesService
     _recipesRepository = recipesRepository;
   }
 
-  
+  internal Recipe CreateRecipe(Recipe recipeData)
+  {
+    Recipe recipe = _recipesRepository.CreateRecipe(recipeData);
+    return recipe;
+  }
 }
