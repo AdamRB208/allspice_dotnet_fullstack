@@ -1,3 +1,4 @@
+
 namespace allspice_dotnet_fullstack.Services;
 
 public class IngredientsService
@@ -11,5 +12,9 @@ public class IngredientsService
     _recipesService = recipesService;
   }
 
-  
+  internal Ingredient CreateIngredient(Ingredient ingredientData)
+  {
+    Ingredient ingredient = _ingredientsRepository.CreateIngredient(ingredientData);
+    return ingredient;
+  }
 }

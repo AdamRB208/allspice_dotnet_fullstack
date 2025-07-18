@@ -13,5 +13,19 @@ public class IngredientsController : ControllerBase
     _auth0Provider = auth0Provider;
   }
 
-  
+  [Authorize]
+  [HttpPost]
+  public async Task<ActionResult<Ingredient>> CreateIngredient([FromBody] Ingredient ingredientData)
+  {
+    try
+    {
+      Account userInfo = await _auth0Provider.GetUserInfoAsync<Account>(HttpContext);
+      Ingredient ingredient = _ingredientsService.CreateIngredient(ingredientData);
+      return Ok(ingredient);
+    }
+    catch (Exception error)
+    {
+      return BadRequest(error.Message);
+    }
+  }
 }
