@@ -1,4 +1,6 @@
 
+
+
 namespace allspice_dotnet_fullstack.Repositories;
 
 public class RecipesRepository
@@ -28,5 +30,26 @@ public class RecipesRepository
       return recipe;
     }, recipeData).SingleOrDefault();
     return createdRecipe;
+  }
+
+  internal List<Recipe> GetAllRecipes()
+  {
+    string sql = @"
+    SELECT recipes.*, accounts.* FROM recipes INNER JOIN accounts ON recipes.creator_id = accounts.id;";
+
+    List<Recipe> recipes = _db.Query(sql, (Recipe recipe, Profile account) =>
+    {
+      recipe.Creator = account;
+      return recipe;
+    }).ToList();
+    return recipes;
+  }
+
+  internal List<Recipe> GetAllRecipesByQuery(string category)
+  {
+    string sql = @"
+    SELECT * FROM recipes WHERE category = @Category;";
+    List<Recipe> recipes = _db.Query<Recipe>(sql, new { Category = category }).ToList();
+    return recipes;
   }
 }
