@@ -52,5 +52,19 @@ public class RecipesService
     return $"Deleted recipe {recipe.Title}!";
   }
 
+  internal Recipe UpdateRecipe(int recipeId, Recipe recipeUpdateData, Account userInfo)
+  {
+    Recipe recipe = GetRecipeById(recipeId);
+    if (recipe.CreatorId != userInfo.Id)
+    {
+      throw new Exception($"You are not allowed to update someone elses recipe, {userInfo.Name.ToUpper()}!");
+    }
 
+    recipe.Instructions = recipeUpdateData.Instructions ?? recipe.Instructions;
+    recipe.Title = recipeUpdateData.Title ?? recipe.Title;
+    recipe.Img = recipeUpdateData.Img ?? recipe.Img;
+
+    _recipesRepository.UpdateRecipe(recipe);
+    return recipe;
+  }
 }

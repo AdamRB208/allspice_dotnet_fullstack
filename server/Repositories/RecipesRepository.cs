@@ -83,6 +83,23 @@ public class RecipesRepository
     if (rowsAffected > 1) throw new Exception("Delete was too successful!");
   }
 
+  internal void UpdateRecipe(Recipe recipe)
+  {
+    string sql = @"
+    UPDATE recipes SET 
+    instructions = @Instructions,
+    title = @Title,
+    img = @Img
+    WHERE id = @Id Limit 1;";
 
-
+    int rowsAffected = _db.Execute(sql, recipe);
+    if (rowsAffected == 0)
+    {
+      throw new Exception("No rows were updated!");
+    }
+    if (rowsAffected > 1)
+    {
+      throw new Exception(rowsAffected + "rows affected!");
+    }
+  }
 }
