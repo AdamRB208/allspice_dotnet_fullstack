@@ -102,4 +102,20 @@ public class RecipesRepository
       throw new Exception(rowsAffected + "rows affected!");
     }
   }
+
+  internal List<Recipe> GetUsersRecipes(string accountId)
+  {
+    string sql = @"
+    SELECT recipes.*, accounts.* 
+    FROM recipes 
+    INNER JOIN accounts ON accounts.id = recipes.creator_id 
+    WHERE recipes.creator_id = @accountId;";
+
+    List<Recipe> recipes = _db.Query(sql, (Recipe recipes, Profile account) =>
+    {
+      recipes.Creator = account;
+      return recipes;
+    }, new { accountId }).ToList();
+    return recipes;
+  }
 }

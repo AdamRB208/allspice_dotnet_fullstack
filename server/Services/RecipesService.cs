@@ -67,4 +67,10 @@ public class RecipesService
     _recipesRepository.UpdateRecipe(recipe);
     return recipe;
   }
+
+  internal List<Recipe> GetUsersRecipes(string accountId)
+  {
+    List<Recipe> recipes = _recipesRepository.GetUsersRecipes(accountId);
+    return recipes;
+  }
 }

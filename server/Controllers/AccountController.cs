@@ -7,11 +7,13 @@ public class AccountController : ControllerBase
 {
   private readonly AccountService _accountService;
   private readonly Auth0Provider _auth0Provider;
+  private readonly RecipesService _recipeService;
 
-  public AccountController(AccountService accountService, Auth0Provider auth0Provider)
+  public AccountController(AccountService accountService, Auth0Provider auth0Provider, RecipesService recipeService)
   {
     _accountService = accountService;
     _auth0Provider = auth0Provider;
+    _recipeService = recipeService;
   }
 
   [HttpGet]
@@ -25,6 +27,22 @@ public class AccountController : ControllerBase
     catch (Exception e)
     {
       return BadRequest(e.Message);
+    }
+  }
+
+  [Authorize]
+  [HttpGet("recipes")]
+  public async Task<ActionResult<List<Recipe>>> GetUsersRecipes()
+  {
+    try
+    {
+      Account userInfo = await _auth0Provider.GetUserInfoAsync<Account>(HttpContext);
+      List<Recipe> recipes = _recipeService.GetUsersRecipes(userInfo.Id);
+      return Ok(recipes);
+    }
+    catch (Exception error)
+    {
+      return BadRequest(error.Message);
     }
   }
 }
