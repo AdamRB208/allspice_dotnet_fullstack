@@ -1,4 +1,6 @@
 
+
+
 namespace allspice_dotnet_fullstack.Repositories;
 
 public class IngredientsRepository
@@ -25,4 +27,24 @@ public class IngredientsRepository
     }, ingredientData).SingleOrDefault();
     return createdIngredient;
   }
+
+
+  internal Ingredient GetIngredientById(int ingredientId)
+  {
+    string sql = @"
+    SELECT * FROM ingredients WHERE ingredients.id = @IngredientId;";
+
+    Ingredient ingredient = _db.Query<Ingredient>(sql, new { IngredientId = ingredientId }).SingleOrDefault();
+    return ingredient;
+  }
+
+  internal void DeleteIngredient(int ingredientId)
+  {
+    string sql = @"
+    DELETE FROM ingredients WHERE id = @IngredientId LIMIT 1;";
+    int rowsAffected = _db.Execute(sql, new { ingredientId });
+    if (rowsAffected == 0) throw new Exception("Delete was unsuccessful!");
+    if (rowsAffected > 1) throw new Exception("Delete was too successful!");
+  }
+
 }
