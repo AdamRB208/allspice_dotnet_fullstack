@@ -1,6 +1,7 @@
 
 
 
+
 namespace allspice_dotnet_fullstack.Repositories;
 
 public class IngredientsRepository
@@ -47,4 +48,18 @@ public class IngredientsRepository
     if (rowsAffected > 1) throw new Exception("Delete was too successful!");
   }
 
+  internal List<Ingredient> GetIngredientByRecipeId(int recipeId)
+  {
+    string sql = @"SELECT ingredients.*, recipes.* 
+    FROM ingredients 
+    INNER JOIN recipes ON recipes.id = ingredients.recipe_id 
+    WHERE ingredients.recipe_id = @RecipeId;";
+
+    List<Ingredient> ingredients = _db.Query(sql, (Ingredient ingredients, Recipe recipe) =>
+    {
+      ingredients.RecipeId = recipe.Id;
+      return ingredients;
+    }, new { recipeId }).ToList();
+    return ingredients;
+  }
 }

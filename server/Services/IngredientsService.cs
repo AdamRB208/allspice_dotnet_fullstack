@@ -1,5 +1,6 @@
 
 
+
 namespace allspice_dotnet_fullstack.Services;
 
 public class IngredientsService
@@ -44,5 +45,11 @@ public class IngredientsService
     CheckRecipeOwnership(ingredient, userInfo);
     _ingredientsRepository.DeleteIngredient(ingredientId);
     return "Ingredient has been Deleted!";
+  }
+
+  internal List<Ingredient> GetIngredientByRecipeId(int recipeId)
+  {
+    List<Ingredient> ingredients = _ingredientsRepository.GetIngredientByRecipeId(recipeId);
+    return ingredients;
   }
 }
