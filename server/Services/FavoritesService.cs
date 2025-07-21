@@ -1,4 +1,5 @@
 
+
 namespace allspice_dotnet_fullstack.Services;
 
 public class FavoritesService
@@ -14,5 +15,11 @@ public class FavoritesService
   {
     FavoriteRecipe favorite = _favoritesRepository.CreateFavorite(favoriteData);
     return favorite;
+  }
+
+  internal List<FavoriteRecipe> GetFavoriteRecipes(string accountId)
+  {
+    List<FavoriteRecipe> favoriteRecipes = _favoritesRepository.GetFavoriteRecipes(accountId);
+    return favoriteRecipes;
   }
 }
