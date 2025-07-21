@@ -1,11 +1,17 @@
 <script setup >
-import Example from '@/components/Example.vue';
+
 
 
 </script>
 
 <template>
-  <Example />
+  <section class="container-fluid">
+    <div class="row">
+      <div class="col-12">
+
+      </div>
+    </div>
+  </section>
 </template>
 
 <style scoped lang="scss">
