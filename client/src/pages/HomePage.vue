@@ -1,6 +1,27 @@
 <script setup >
+import { AppState } from '@/AppState.js';
+import { recipeService } from '@/services/RecipeService.js';
+import { logger } from '@/utils/Logger.js';
+import { Pop } from '@/utils/Pop.js';
+import { computed, onMounted } from 'vue';
 
 
+const recipe = computed(() => AppState.recipes)
+
+onMounted(() => {
+  getRecipes()
+})
+
+async function getRecipes() {
+  try {
+    await recipeService.getRecipes()
+  }
+  catch (error) {
+    Pop.error(error, 'COULD NOT GET RECIPES!');
+    logger.error('Could not get recipes!');
+
+  }
+}
 
 </script>
 
@@ -8,7 +29,7 @@
   <section class="container-fluid">
     <div class="row">
       <div class="col-12">
-
+        {{ recipe }}
       </div>
     </div>
   </section>
