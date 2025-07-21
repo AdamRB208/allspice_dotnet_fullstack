@@ -1,7 +1,4 @@
 
-
-
-
 namespace allspice_dotnet_fullstack.Repositories;
 
 public class IngredientsRepository

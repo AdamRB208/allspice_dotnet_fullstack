@@ -1,8 +1,4 @@
 
-
-
-
-
 using System.ComponentModel.DataAnnotations;
 
 namespace allspice_dotnet_fullstack.Repositories;
