@@ -1,5 +1,6 @@
 <script setup >
 import { AppState } from '@/AppState.js';
+import RecipeCard from '@/components/RecipeCard.vue';
 import { recipeService } from '@/services/RecipeService.js';
 import { logger } from '@/utils/Logger.js';
 import { Pop } from '@/utils/Pop.js';
@@ -27,9 +28,9 @@ async function getRecipes() {
 
 <template>
   <section class="container-fluid">
-    <div class="row">
-      <div class="col-12">
-        {{ recipe }}
+    <div class="row d-flex justify-content-center">
+      <div v-for="recipes in recipe" :key="recipes.id" class="col-md-3 m-2 d-flex justify-content-center flex-column">
+        <RecipeCard :recipe="recipes" />
       </div>
     </div>
   </section>
