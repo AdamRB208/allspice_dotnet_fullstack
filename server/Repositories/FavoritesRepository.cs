@@ -1,5 +1,7 @@
 
 
+
+
 namespace allspice_dotnet_fullstack.Repositories;
 
 public class FavoritesRepository
@@ -27,6 +29,7 @@ public class FavoritesRepository
     return favorite;
   }
 
+
   internal List<FavoriteRecipe> GetFavoriteRecipes(string accountId)
   {
     string sql = @"
@@ -43,5 +46,30 @@ public class FavoritesRepository
       return favoriteRecipe;
     }, new { accountId }).ToList();
     return favorites;
+  }
+
+  internal Favorite GetFavoriteById(int favoriteId)
+  {
+    string sql = @"
+    SELECT favorites.*, accounts.* 
+    FROM favorites
+    INNER JOIN accounts ON favorites.account_id = accounts.id
+    WHERE favorites.id = @FavoritesId;";
+
+    Favorite foundFavorite = _db.Query(sql, (Favorite favorite, Profile account) =>
+    {
+      favorite.AccountId = account.Id;
+      return favorite;
+    }, new { FavoritesId = favoriteId }).SingleOrDefault();
+    return foundFavorite;
+  }
+
+  internal void DeleteFavorite(int favoriteId)
+  {
+    string sql = @"
+    DELETE FROM favorites WHERE favorites.id = @FavoriteId;";
+    int rowsAffected = _db.Execute(sql, new { favoriteId });
+    if (rowsAffected == 0) throw new Exception("Delete was unsuccessful!");
+    if (rowsAffected > 1) throw new Exception("Delete was too successful!");
   }
 }

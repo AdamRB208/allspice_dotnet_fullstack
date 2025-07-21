@@ -1,3 +1,5 @@
+using System.Threading;
+
 namespace allspice_dotnet_fullstack.Controllers;
 
 [ApiController]
@@ -23,6 +25,22 @@ public class FavoritesController : ControllerBase
       favoriteData.AccountId = userInfo.Id;
       FavoriteRecipe favorite = _favoritesService.CreateFavorite(favoriteData);
       return Ok(favorite);
+    }
+    catch (Exception error)
+    {
+      return BadRequest(error.Message);
+    }
+  }
+
+  [Authorize]
+  [HttpDelete("{favoriteId}")]
+  public async Task<ActionResult<string>> DeleteFavorite(int favoriteId)
+  {
+    try
+    {
+      Account userInfo = await _auth0Provider.GetUserInfoAsync<Account>(HttpContext);
+      string message = _favoritesService.DeleteFavorite(favoriteId, userInfo);
+      return Ok(message);
     }
     catch (Exception error)
     {
