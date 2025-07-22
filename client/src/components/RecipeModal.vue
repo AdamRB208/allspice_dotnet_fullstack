@@ -29,7 +29,7 @@ const editableIngredientData = ref({
 
 
 <template>
-  <div class="modal" tabindex="-1" id="recipeModal" aria-labelledby="recipeModalLabel" aria-hidden="true">
+  <div class="modal" tabindex="-1" id="recipeModal" aria-labelledby="recipeModalLabel">
     <div class="modal-dialog">
       <div v-if="recipe" class="modal-content">
         <div class="modal-header d-flex">

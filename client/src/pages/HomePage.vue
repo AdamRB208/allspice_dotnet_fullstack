@@ -35,7 +35,8 @@ async function getRecipes() {
       </div>
     </div>
   </section>
-  <RecipeModal></RecipeModal>
+  <RecipeModal>
+  </RecipeModal>
 </template>
 
 <style scoped lang="scss">

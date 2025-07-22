@@ -11,7 +11,7 @@ const route = useRoute()
 const account = computed(() => AppState.account)
 
 defineProps({
-  recipe: {type: Recipe, required: true}
+  recipe: { type: Recipe, required: true }
 })
 
 async function setActiveRecipe(recipe, recipeId) {
@@ -35,7 +35,7 @@ async function setActiveRecipe(recipe, recipeId) {
 <template>
   <div>
     <div @click="setActiveRecipe(recipe, recipe.id)" class="recipe-card" data-bs-toggle="modal"
-      data-bs-target="recipeModal">
+      data-bs-target="#recipeModal">
       <div class="card-img">
         <img :src="recipe.img" :alt="`image of ${recipe.title}`" class="recipe-img" type="button">
         <div class="card-text">
