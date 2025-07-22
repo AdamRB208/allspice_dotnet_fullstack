@@ -5,6 +5,12 @@ import { AppState } from "@/AppState.js"
 
 
 class RecipeService {
+  async getMyRecipes() {
+    const response = await api.get('/account/recipes')
+    logger.log('Got users recipes!', response.data)
+    const recipes = response.data.map(pojo => new Recipe(pojo))
+    AppState.recipes = recipes
+  }
   async createRecipe(recipeData) {
     const response = await api.post('api/recipes', recipeData)
     logger.log('Created Recipe!', response.data)

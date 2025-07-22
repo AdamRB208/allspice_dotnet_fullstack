@@ -91,4 +91,15 @@ a {
   border-bottom-left-radius: 0;
   border-bottom-right-radius: 0;
 }
+.col-md-12 {
+  min-height: 40dvh;
+}
+
+.header-img {
+  background-image: url(https://images.unsplash.com/photo-1714139314634-852891bdf2d1?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTk0fHxpbmdyZWRpZW50cyUyMG9uJTIwY2hvcHBpbmclMjBib2FyZHxlbnwwfDB8MHx8fDI%3D);
+  background-repeat: no-repeat;
+  background-size: cover;
+  max-width: 100%;
+  height: auto;
+}
 </style>
