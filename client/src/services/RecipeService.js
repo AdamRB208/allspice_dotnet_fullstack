@@ -12,6 +12,10 @@ class RecipeService {
     AppState.recipes = recipes
   }
 
+  setActiveRecipe(activeRecipe) {
+    AppState.activeRecipe = activeRecipe
+    logger.log(activeRecipe)
+  }
 
 }
 

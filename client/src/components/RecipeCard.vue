@@ -1,18 +1,41 @@
 <script setup>
+import { AppState } from '@/AppState.js';
 import { Recipe } from '@/models/Recipe.js';
+import { recipeService } from '@/services/RecipeService.js';
+import { logger } from '@/utils/Logger.js';
+import { Pop } from '@/utils/Pop.js';
+import { computed } from 'vue';
+import { useRoute } from 'vue-router';
 
+const route = useRoute()
+const account = computed(() => AppState.account)
 
 defineProps({
   recipe: {type: Recipe, required: true}
 })
 
+async function setActiveRecipe(recipe, recipeId) {
+  try {
+    AppState.activeRecipe = recipe
+    await recipeService.setActiveRecipe(recipe)
+    logger.log('Setting active recipe', recipe)
+    recipeId = route.params.recipeId || recipeId
+    logger.log('Recipe Id', recipeId)
+    AppState.activeRecipe.id = recipeId
+  }
+  catch (error) {
+    Pop.error(error, 'COULD NOT SET ACTIVE RECIPE!');
+    logger.error('Could not set active recipe!', error)
+  }
+}
 
 </script>
 
 
 <template>
   <div>
-    <div class="recipe-card">
+    <div @click="setActiveRecipe(recipe, recipe.id)" class="recipe-card" data-bs-toggle="modal"
+      data-bs-target="recipeModal">
       <div class="card-img">
         <img :src="recipe.img" :alt="`image of ${recipe.title}`" class="recipe-img" type="button">
         <div class="card-text">
@@ -21,10 +44,9 @@ defineProps({
             {{ recipe.category }}
           </span>
         </div>
-        <div class="card-icon">
-          <i class="mdi mdi-heart text-danger fs-4"
-            type="button"></i>
-          <i class="mdi mdi-heart-outline text-white fs-4" type="button"></i>
+        <div v-if="account" class="card-icon">
+          <i class="mdi mdi-heart text-danger fs-4" type="button"></i>
+          <!-- <i class="mdi mdi-heart-outline text-white fs-4" type="button"></i> -->
         </div>
       </div>
     </div>

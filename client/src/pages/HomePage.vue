@@ -1,6 +1,7 @@
 <script setup >
 import { AppState } from '@/AppState.js';
 import RecipeCard from '@/components/RecipeCard.vue';
+import RecipeModal from '@/components/RecipeModal.vue';
 import { recipeService } from '@/services/RecipeService.js';
 import { logger } from '@/utils/Logger.js';
 import { Pop } from '@/utils/Pop.js';
@@ -34,6 +35,7 @@ async function getRecipes() {
       </div>
     </div>
   </section>
+  <RecipeModal></RecipeModal>
 </template>
 
 <style scoped lang="scss">
