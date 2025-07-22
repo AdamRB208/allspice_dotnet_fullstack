@@ -62,12 +62,12 @@ watch(theme, () => {
           <RouterLink :to="{ name: 'Home' }">
             <button class="align-self-center btn btn-outline-success rounded-pill p-2 m-1">All Recipes</button>
           </RouterLink>
-          <!-- <RouterLink v-if="account && account.id" :to="{ name: 'CreatorRecipes', params: { creatorId: account.id } }">
+          <RouterLink v-if="account && account.id" :to="{ name: 'CreatorRecipes', params: { creatorId: account.id } }">
             <button class="align-self-center btn btn-outline-success rounded-pill p-2 m-1">My Recipes</button>
           </RouterLink>
           <RouterLink v-if="account && account.id" :to="{ name: 'Favorites', params: { accountId: account.id } }">
             <button class="align-self-center btn btn-outline-success rounded-pill p-2 m-1">Favorites</button>
-          </RouterLink> -->
+          </RouterLink>
           <button v-if="account" class="align-self-center btn btn-outline-success rounded-pill p-2 m-1"
             data-bs-toggle="modal" data-bs-target="#createModal" type="button">Create</button>
         </div>
