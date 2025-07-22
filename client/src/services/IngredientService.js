@@ -13,6 +13,13 @@ class IngredientService {
     logger.log('rendering ingredients', ingredients)
   }
 
+  async createIngredient(ingredientData) {
+    const response = await api.post('api/ingredients', ingredientData)
+    logger.log('Updated Ingredient!', response.data)
+    const ingredient = new Ingredient(response.data)
+    return ingredient
+  }
+
 }
 
 export const ingredientService = new IngredientService()

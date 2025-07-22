@@ -1,5 +1,6 @@
 <script setup>
 import { AppState } from '@/AppState.js';
+import { ingredientService } from '@/services/IngredientService.js';
 import { recipeService } from '@/services/RecipeService.js';
 import { logger } from '@/utils/Logger.js';
 import { Pop } from '@/utils/Pop.js';
@@ -56,6 +57,25 @@ async function deleteRecipe(recipeId) {
   }
 }
 
+async function createIngredient(recipeId) {
+  try {
+    const recipeId = AppState.activeRecipe.id
+    const ingredientData = editableIngredientData.value
+    editableIngredientData.value = {
+      name: '',
+      quantity: '',
+      recipeId: ''
+    }
+    ingredientData.recipeId = recipeId
+    logger.log('ingredientData', ingredientData)
+    logger.log('recipeId', recipeId)
+    await ingredientService.createIngredient(ingredientData)
+  }
+  catch (error) {
+    Pop.error(error, 'COULD NOT CREATE INGREDIENT!');
+    logger.error('Could not create Ingredient!', error)
+  }
+}
 
 
 </script>
@@ -111,7 +131,7 @@ async function deleteRecipe(recipeId) {
         </div>
         <div class="modal-footer">
           <button v-if="account && recipe.creatorId === account.id && showIngredientForm.value === true"
-            class="btn btn-primary mt-2" type="button">Save
+            @click="createIngredient(recipe.id)" class="btn btn-primary mt-2" type="button">Save
             Ingredient</button>
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
         </div>
