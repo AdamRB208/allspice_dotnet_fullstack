@@ -10,6 +10,7 @@ import { useRoute } from 'vue-router';
 
 const route = useRoute()
 const account = computed(() => AppState.account)
+const favorite = computed(() => AppState.favorites)
 
 defineProps({
   recipe: { type: Recipe, required: true }
@@ -49,8 +50,9 @@ async function setActiveRecipe(recipe, recipeId) {
           </span>
         </div>
         <div v-if="account" class="card-icon">
-          <i class="mdi mdi-heart text-danger fs-4" type="button"></i>
-          <!-- <i class="mdi mdi-heart-outline text-white fs-4" type="button"></i> -->
+          <i v-if="favorite.some(favorite => favorite.id === recipe.id)" class="mdi mdi-heart text-danger fs-4"
+            type="button"></i>
+          <i v-else class="mdi mdi-heart-outline text-white fs-4" type="button"></i>
         </div>
       </div>
     </div>

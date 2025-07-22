@@ -1,6 +1,5 @@
 <script setup >
 import { AppState } from '@/AppState.js';
-import CreateModal from '@/components/CreateModal.vue';
 import RecipeCard from '@/components/RecipeCard.vue';
 import RecipeModal from '@/components/RecipeModal.vue';
 import { recipeService } from '@/services/RecipeService.js';
@@ -10,6 +9,7 @@ import { computed, onMounted } from 'vue';
 
 
 const recipe = computed(() => AppState.recipes)
+
 
 onMounted(() => {
   getRecipes()
