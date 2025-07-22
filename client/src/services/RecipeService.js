@@ -26,6 +26,14 @@ class RecipeService {
     recipe.splice(index, 1, recipeData)
   }
 
+  async deleteRecipe(recipeId) {
+    const response = await api.delete(`api/recipes/${recipeId}`)
+    logger.log('Deleted Recipe!', response.data)
+    const recipe = AppState.recipes
+    const index = recipe.findIndex(recipe => recipe.id == recipeId)
+    recipe.splice(index, 1)
+  }
+
 }
 
 export const recipeService = new RecipeService()

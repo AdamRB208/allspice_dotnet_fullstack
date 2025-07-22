@@ -42,6 +42,22 @@ async function editRecipe(recipeId) {
   }
 }
 
+async function deleteRecipe(recipeId) {
+  try {
+    const confirmed = await Pop.confirm("Are you sure you want to delete this Recipe?")
+    if (!confirmed) {
+      return
+    }
+    await recipeService.deleteRecipe(recipeId)
+  }
+  catch (error) {
+    Pop.error(error, 'COULD NOT DELETE RECIPE!');
+    logger.error('Could not delete recipe!', error)
+  }
+}
+
+
+
 </script>
 
 
@@ -62,7 +78,7 @@ async function editRecipe(recipeId) {
               <li><a @click="showRecipeForm.value = true" class="dropdown-item" type="button">Edit Recipe</a></li>
               <li><a @click="showIngredientForm.value = true" class="dropdown-item" type="button">Edit Ingredient</a>
               </li>
-              <li><a class="dropdown-item" type="button">Delete Recipe</a></li>
+              <li><a @click="deleteRecipe(recipe.id)" class="dropdown-item" type="button">Delete Recipe</a></li>
             </ul>
           </div>
         </div>
