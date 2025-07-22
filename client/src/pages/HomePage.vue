@@ -1,5 +1,6 @@
 <script setup >
 import { AppState } from '@/AppState.js';
+import CreateModal from '@/components/CreateModal.vue';
 import RecipeCard from '@/components/RecipeCard.vue';
 import RecipeModal from '@/components/RecipeModal.vue';
 import { recipeService } from '@/services/RecipeService.js';
@@ -37,6 +38,7 @@ async function getRecipes() {
   </section>
   <RecipeModal>
   </RecipeModal>
+  <CreateModal />
 </template>
 
 <style scoped lang="scss">

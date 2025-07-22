@@ -1,8 +1,13 @@
 <script setup>
-import { ref, watch } from 'vue';
+import { computed, ref, watch } from 'vue';
 import { loadState, saveState } from '../utils/Store.js';
 import Login from './Login.vue';
+import { AppState } from '@/AppState.js';
+import CreateModal from './CreateModal.vue';
 
+
+const account = computed(() => AppState.account)
+const recipe = computed(() => AppState.recipes)
 const theme = ref(loadState('theme') || 'light')
 
 function toggleTheme() {
@@ -49,6 +54,27 @@ watch(theme, () => {
       </div>
     </div>
   </nav>
+  <section class="container-fluid">
+    <div class="row">
+      <div class="col-md-12 d-flex flex-column header-img mb-5">
+        <h1 class="d-flex justify-content-center text-light m-5">All Spice</h1>
+        <div class="d-flex justify-content-center align-items-end">
+          <RouterLink :to="{ name: 'Home' }">
+            <button class="align-self-center btn btn-outline-success rounded-pill p-2 m-1">All Recipes</button>
+          </RouterLink>
+          <!-- <RouterLink v-if="account && account.id" :to="{ name: 'CreatorRecipes', params: { creatorId: account.id } }">
+            <button class="align-self-center btn btn-outline-success rounded-pill p-2 m-1">My Recipes</button>
+          </RouterLink>
+          <RouterLink v-if="account && account.id" :to="{ name: 'Favorites', params: { accountId: account.id } }">
+            <button class="align-self-center btn btn-outline-success rounded-pill p-2 m-1">Favorites</button>
+          </RouterLink> -->
+          <button v-if="account" class="align-self-center btn btn-outline-success rounded-pill p-2 m-1"
+            data-bs-toggle="modal" data-bs-target="#createModal" type="button">Create</button>
+        </div>
+      </div>
+    </div>
+  </section>
+  <CreateModal />
 </template>
 
 <style lang="scss" scoped>
