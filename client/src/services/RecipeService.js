@@ -3,6 +3,7 @@ import { api } from "./AxiosService.js"
 import { Recipe } from "@/models/Recipe.js"
 import { AppState } from "@/AppState.js"
 
+
 class RecipeService {
 
   async getRecipes() {
@@ -15,6 +16,14 @@ class RecipeService {
   setActiveRecipe(activeRecipe) {
     AppState.activeRecipe = activeRecipe
     logger.log(activeRecipe)
+  }
+
+  async editRecipe(recipeId, recipeData) {
+    const response = await api.put(`api/recipes/${recipeId}`, recipeData)
+    logger.log('Updated recipe!', response.data)
+    const recipe = AppState.recipes
+    const index = recipe.findIndex(recipe => recipe.id == recipeId)
+    recipe.splice(index, 1, recipeData)
   }
 
 }

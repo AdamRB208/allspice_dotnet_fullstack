@@ -1,5 +1,8 @@
 <script setup>
 import { AppState } from '@/AppState.js';
+import { recipeService } from '@/services/RecipeService.js';
+import { logger } from '@/utils/Logger.js';
+import { Pop } from '@/utils/Pop.js';
 import { computed, ref } from 'vue';
 
 const account = computed(() => AppState.account)
@@ -24,6 +27,20 @@ const editableIngredientData = ref({
   quantity: '',
   recipeId: ''
 })
+
+async function editRecipe(recipeId) {
+  try {
+    const recipeData = editableRecipeData.value
+    editableRecipeData.value = {
+      instructions: ''
+    }
+    await recipeService.editRecipe(recipeId, recipeData)
+  }
+  catch (error) {
+    Pop.error(error, 'COULD NOT EDIT RECIPE!');
+    logger.error('Could not edit recipe!', error)
+  }
+}
 
 </script>
 
@@ -60,7 +77,7 @@ const editableIngredientData = ref({
               <textarea v-if="showRecipeForm.value === true" v-model="editableRecipeData.instructions"
                 class="form-control" rows="3" placeholder="Edit instructions here..."></textarea>
               <button v-if="account && recipe.creatorId === account.id && showRecipeForm.value === true"
-                class="btn btn-primary mt-2" type="button">Save
+                @click="editRecipe(recipe.id)" class="btn btn-primary mt-2" type="button">Save
                 Instructions</button>
             </div>
             <h5 class="text-center text-bold">Ingredients</h5>
