@@ -1,6 +1,7 @@
 <script setup>
 import { AppState } from '@/AppState.js';
 import { Recipe } from '@/models/Recipe.js';
+import { favoritesService } from '@/services/FavoritesService.js';
 import { ingredientService } from '@/services/IngredientService.js';
 import { recipeService } from '@/services/RecipeService.js';
 import { logger } from '@/utils/Logger.js';
@@ -34,6 +35,18 @@ async function setActiveRecipe(recipe, recipeId) {
   }
 }
 
+async function createFavorite(recipeId) {
+  try {
+    const favoriteData = { recipeId }
+    AppState.recipes.id = recipeId
+    await favoritesService.createFavorite(favoriteData)
+  }
+  catch (error) {
+    Pop.error(error, 'COULD NOT CREATE FAVORITE!');
+    logger.error('Could not create Favorite!', error)
+  }
+}
+
 </script>
 
 
@@ -52,7 +65,7 @@ async function setActiveRecipe(recipe, recipeId) {
         <div v-if="account" class="card-icon">
           <i v-if="favorite.some(favorite => favorite.id === recipe.id)" class="mdi mdi-heart text-danger fs-4"
             type="button"></i>
-          <i v-else class="mdi mdi-heart-outline text-white fs-4" type="button"></i>
+          <i v-else @click="createFavorite(recipe.id)" class="mdi mdi-heart-outline text-white fs-4" type="button"></i>
         </div>
       </div>
     </div>

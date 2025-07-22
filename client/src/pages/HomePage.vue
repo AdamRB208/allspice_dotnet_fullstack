@@ -9,6 +9,8 @@ import { computed, onMounted } from 'vue';
 
 
 const recipe = computed(() => AppState.recipes)
+const account = computed(() => AppState.account)
+const favorite = computed(() => AppState.favorites)
 
 
 onMounted(() => {
