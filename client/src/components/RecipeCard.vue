@@ -1,6 +1,7 @@
 <script setup>
 import { AppState } from '@/AppState.js';
 import { Recipe } from '@/models/Recipe.js';
+import { ingredientService } from '@/services/IngredientService.js';
 import { recipeService } from '@/services/RecipeService.js';
 import { logger } from '@/utils/Logger.js';
 import { Pop } from '@/utils/Pop.js';
@@ -22,6 +23,9 @@ async function setActiveRecipe(recipe, recipeId) {
     recipeId = route.params.recipeId || recipeId
     logger.log('Recipe Id', recipeId)
     AppState.activeRecipe.id = recipeId
+    logger.log('Getting Ingredients', recipeId)
+    await ingredientService.getIngredientByRecipeId(recipeId)
+
   }
   catch (error) {
     Pop.error(error, 'COULD NOT SET ACTIVE RECIPE!');
