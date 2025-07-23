@@ -4,6 +4,7 @@ import { loadState, saveState } from '../utils/Store.js';
 import Login from './Login.vue';
 import { AppState } from '@/AppState.js';
 import CreateModal from './CreateModal.vue';
+import SearchForm from './SearchForm.vue';
 
 
 const account = computed(() => AppState.account)
@@ -42,6 +43,9 @@ watch(theme, () => {
             </RouterLink>
           </li> -->
         </ul>
+        <span class="ms-auto me-3 d-flex justify-content-center">
+          <SearchForm />
+        </span>
         <!-- LOGIN COMPONENT HERE -->
         <div class="ms-auto">
           <button class="btn text-light" @click="toggleTheme"

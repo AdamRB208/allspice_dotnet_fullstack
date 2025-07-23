@@ -46,6 +46,17 @@ class RecipeService {
     recipe.splice(index, 1)
   }
 
+  async searchRecipes(searchQuery) {
+    const response = await api.get(`api/recipes?category=${searchQuery}`)
+    this.handleResponse(response)
+    AppState.currentSearchQuery = searchQuery
+  }
+
+  handleResponse(response) {
+    const recipe = response.data.map(pojo => new Recipe(pojo))
+    AppState.recipes = recipe
+  }
+
 }
 
 export const recipeService = new RecipeService()
