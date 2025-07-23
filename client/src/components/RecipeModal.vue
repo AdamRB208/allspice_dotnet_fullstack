@@ -5,12 +5,11 @@ import { recipeService } from '@/services/RecipeService.js';
 import { logger } from '@/utils/Logger.js';
 import { Pop } from '@/utils/Pop.js';
 import { computed, ref } from 'vue';
-import CreateModal from './CreateModal.vue';
 
 const account = computed(() => AppState.account)
 const recipe = computed(() => AppState.activeRecipe)
 const ingredient = computed(() => AppState.ingredients)
-// const recipes = computed(() => AppState.recipes)
+
 
 const showRecipeForm = ref({
   value: false

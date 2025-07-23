@@ -1,5 +1,6 @@
 <script setup>
 import { AppState } from '@/AppState.js';
+import { Favorite } from '@/models/Favorite.js';
 import { Recipe } from '@/models/Recipe.js';
 import { favoritesService } from '@/services/FavoritesService.js';
 import { ingredientService } from '@/services/IngredientService.js';
@@ -35,10 +36,9 @@ async function setActiveRecipe(recipe, recipeId) {
   }
 }
 
-async function createFavorite(recipeId) {
+async function createFavorite(recipe) {
   try {
-    const favoriteData = { recipeId }
-    AppState.recipes.id = recipeId
+    const favoriteData = { recipeId: recipe.id }
     await favoritesService.createFavorite(favoriteData)
   }
   catch (error) {
@@ -65,7 +65,8 @@ async function createFavorite(recipeId) {
         <div v-if="account" class="card-icon">
           <i v-if="favorite.some(favorite => favorite.id === recipe.id)" class="mdi mdi-heart text-danger fs-4"
             type="button"></i>
-          <i v-else @click="createFavorite(recipe.id)" class="mdi mdi-heart-outline text-white fs-4" type="button"></i>
+          <i v-else @click.stop="createFavorite(recipe)" class="mdi mdi-heart-outline text-white fs-4"
+            type="button"></i>
         </div>
       </div>
     </div>
