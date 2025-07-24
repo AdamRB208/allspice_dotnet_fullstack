@@ -6,8 +6,9 @@ import { AuthService } from '../services/AuthService.js';
 const identity = computed(() => AppState.identity)
 const account = computed(() => AppState.account)
 
-function login() {
+async function login() {
   AuthService.loginWithRedirect()
+
 }
 function logout() {
   AuthService.logout()
